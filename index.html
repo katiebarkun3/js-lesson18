@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="test.js"></script>
+    <title>ls20</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+        .weather {
+            width: 20vw;
+            background-color: rgb(23, 23, 71);
+            color: lightblue;
+            border-radius: 15px;
+            box-shadow: 2px 2px 15px gray;
+            font-style: 1.5rem;
+        }
+        .weather * {
+            text-align: center;
+        }
+        .weather_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .weather_container img {
+            width: 40px;
+            height: 40px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="weather">
+        <h2>Weather in: <span class="city"></span></h2>
+        <p>Temperature: <span class="temp"></span>°C</p>
+        <p>Humidity: <span class="humidity"></span> %</p>
+        <p>Wind: <span class="wind"></span> m/s</p>
+        <p class="weather_container">Weather: <img id="wicon" src="" alt="img1"></p>
+
+    </div>
+
+
+
+
+
+
+
+    <script>
+        
+          /*  let pass = '123';
+        try {
+           //1  doSomeone(); 
+            if(pass.length < 5) {
+                throw 'password has less than 5 symbols';
+            }
+
+        } catch (error) {
+            if(error instanceof TypeError){
+                console.log('TypeError');
+            }
+            if(error instanceof ReferenceError){
+                console.log('ReferenceError');
+            }
+            console.log('catch');
+        
+        } finally {
+            console.log('finally');
+        }
+        console.log('ok');  */
+
+        let apiKey = '69eea7577f7bdf59547ca01ebad31937'
+
+        let city = 'Minsk';
+
+        let url = `http://api.openweathermap.org/data/2.5/weather?id=15&q=${city}&lang=en&units=metric&appid=${apiKey}`;
+
+        let resCity = document.querySelector('.city');
+        let resTemp = document.querySelector('.temp');
+        let resHumidity = document.querySelector('.humidity');
+        let resWind = document.querySelector('.wind');
+        let resIcon = document.querySelector('#wicon');
+
+
+
+        fetch(url)
+        .then(respons => {
+            return respons.json()
+        })
+        .then(function(data){
+            console.log(data);
+            showWeather(data);
+        });
+
+        function showWeather(res){
+            resCity.innerText = res.name;
+            resTemp.innerText = Math.round(res.main.temp);
+            resHumidity.innerText = res.main.humidity;
+            resWind.innerText = res.wind.speed;
+
+            let iconcode = res.weather[0].icon;
+            let iconurl = `http://api.openweathermap.org/img/w/${iconcode}.png`
+
+            resIcon.src = iconurl;
+
+            
+
+        }
+
+        
+    </script>
+
+    <!-- https://random-word-api.herokuapp.com/word?number=10 -->
+
+</body>
+</html>
